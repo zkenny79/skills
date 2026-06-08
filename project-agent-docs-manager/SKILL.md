@@ -59,7 +59,6 @@ CHANGELOG.md
 DEEPDIVE.md
 .agents/README.md
 .agents/deepdive.md
-.agents/references/
 .agents/knowledgebase/
 knowledgebase/
 ```
@@ -89,8 +88,6 @@ Inside `.agents/`, maintain:
 .agents/
 ├── README.md
 ├── deepdive.md
-├── references/
-├── handovers/
 ├── plans/
 ├── audits/
 └── knowledgebase/
@@ -118,21 +115,17 @@ Inside `.agents/`, maintain:
 
 `.agents/deepdive.md` stores detailed agent-specific notes, platform quirks, investigations, refactoring notes, and deeper observations that should not clutter the root docs.
 
-`.agents/references/` stores long references, copied docs, API notes, product rules, or external context.
-
-`.agents/handovers/` stores dated handover snapshots.
-
 `.agents/plans/` stores plans before major or risky changes.
 
 `.agents/audits/` stores audits, review notes, risk reports, and cleanup findings.
 
-`.agents/knowledgebase/` stores local knowledgebase notes. Summarize durable facts from it in `MEMORY.md`.
+`.agents/knowledgebase/` stores local knowledgebase notes for feeding project context. Can contain subfolders for similar projects. Summarize durable facts from it in `MEMORY.md`.
 
 ## Workflow before project changes
 
 1. Read the root docs.
 2. Read `.agents/README.md` and `.agents/deepdive.md` if they exist.
-3. Check `.agents/references/`, `.agents/knowledgebase/`, or `knowledgebase/` if relevant.
+3. Check `.agents/knowledgebase/` or `knowledgebase/` if relevant.
 4. Identify existing routes, files, functions, styles, APIs, components, and conventions.
 5. Make the smallest safe change.
 6. Update `CHANGELOG.md`.
@@ -376,15 +369,17 @@ When creating `.agents/README.md`, include:
 
 This folder stores agent-specific working context.
 
-Root docs should stay readable and stable. Detailed plans, audits, investigation notes, references, knowledgebase notes, and temporary handovers can live here.
+Root docs should stay readable and stable. Detailed plans, audits, investigation notes, and knowledgebase notes can live here.
+
+For handovers and references, use the root files:
+- Current work status: HANDOVER.md
+- Durable context and references: MEMORY.md
 
 ## Structure
 
 .agents/
 ├── README.md
 ├── deepdive.md
-├── references/
-├── handovers/
 ├── plans/
 ├── audits/
 └── knowledgebase/
