@@ -52,7 +52,6 @@ AGENTS.md
 .agents/handover.md
 .agents/changelog.md
 .agents/deployment.md
-.agents/knowledgebase/
 ```
 
 If some files do not exist, create them when initializing the docs system.
@@ -72,14 +71,12 @@ Inside `.agents/`, maintain:
 
 ```text
 .agents/
-├── deepdive.md
+── deepdive.md
 ├── memory.md
 ├── rules.md
 ├── handover.md
 ├── changelog.md
-├── deployment.md
-├── audits/
-└── knowledgebase/
+└── deployment.md
 ```
 
 ## File purposes
@@ -99,7 +96,7 @@ Inside `.agents/`, maintain:
 - How to use the `.agents/` folder
 - Agent workflow instructions
 
-`.agents/memory.md` stores durable context for context compaction. Include things like "no Git repository", preferred workflows, useful commands, important project facts, known limitations, knowledgebase summaries, and long-term conventions. Do not dump every small change here.
+`.agents/memory.md` stores durable context for context compaction. Include things like "no Git repository", preferred workflows, useful commands, important project facts, known limitations, and long-term conventions. Do not dump every small change here.
 
 `.agents/rules.md` is the strict rulebook. It must include: always use existing routes and conventions, always update `.agents/changelog.md`, never rely on Git status for compaction unless explicitly asked, always check `.agents/changelog.md`, `.agents/handover.md`, chat history, and `.agents/`, do not invent deployment steps, do not overwrite user work without permission.
 
@@ -109,17 +106,12 @@ Inside `.agents/`, maintain:
 
 `.agents/deployment.md` documents deployment only when known. Include servers, domains, ports, service names, paths, restart commands, Cloudflare tunnels, Docker, systemd, VPS, Raspberry Pi, environment files, rollback, and troubleshooting. Do not guess.
 
-`.agents/audits/` stores audits, review notes, risk reports, and cleanup findings.
-
-`.agents/knowledgebase/` stores local knowledgebase notes for feeding project context. Can contain subfolders for similar projects. Summarize durable facts from it in `.agents/memory.md`.
-
 ## Workflow before project changes
 
 1. Read `README.md` and `AGENTS.md`.
 2. Read `.agents/deepdive.md` and `.agents/rules.md`.
-3. Check `.agents/knowledgebase/` if relevant.
-4. Identify existing routes, files, functions, styles, APIs, components, and conventions.
-5. Make the smallest safe change.
+3. Identify existing routes, files, functions, styles, APIs, components, and conventions.
+4. Make the smallest safe change.
 6. Update `.agents/changelog.md`.
 7. Update `.agents/handover.md` if anything is unfinished or important for the next agent.
 8. Update `.agents/memory.md` only if durable long-term context changed.
@@ -200,18 +192,15 @@ This folder stores all project documentation for AI agents:
 - **handover.md**: Current work status and unfinished tasks
 - **changelog.md**: History of all meaningful changes
 - **deployment.md**: Deployment information (servers, ports, commands)
-- **audits/**: Security audits, reviews, risk reports
-- **knowledgebase/**: Project context and similar project references
 
 ## Agent workflow
 
 1. Read README.md and AGENTS.md at project root.
 2. Read this file (deepdive.md).
 3. Read .agents/rules.md.
-4. Check .agents/knowledgebase/ if relevant.
-5. Make changes.
-6. Update .agents/changelog.md.
-7. Update .agents/handover.md if needed.
+4. Make changes.
+5. Update .agents/changelog.md.
+6. Update .agents/handover.md if needed.
 
 ## Architecture
 
@@ -273,10 +262,6 @@ This file stores durable project context for future agents and context compactio
 - Git repository: Unknown. Do not assume Git exists.
 - Context source priority: .agents/changelog.md, .agents/handover.md, chat history, .agents/, then project files.
 - Preferred approach: use existing project routes, files, functions, styles, and conventions before creating new ones.
-
-## Knowledge base context
-
-If a knowledgebase folder exists, summarize its important contents here.
 
 ## Useful techniques
 
