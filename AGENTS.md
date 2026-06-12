@@ -1,83 +1,80 @@
 # Global Agent Rules
 
-When entering a project, use progressive disclosure — do not bulk-load all docs.
+When entering a project, use progressive disclosure — do not bulk-load docs.
+Default workflow: search the relevant source files directly and make the
+smallest safe change using existing patterns.
 
 ## Default Read Policy
 
-**Always read (if present):**
-
-1. Project `AGENTS.md`
-2. `<docs>/RULES.md` or `<docs>/rules.md` (`.agent/` or `.agents/` — use what exists)
+**Always read (if present):** project `AGENTS.md` only.
+`CLAUDE.md` should be a thin import of `AGENTS.md` (`@AGENTS.md`) so both stay
+identical — one source of truth for every agent. If a project still has a
+divergent CLAUDE.md, treat AGENTS.md as authoritative and suggest unifying.
 
 **Read on demand:**
 
 | Need | Read |
 |------|------|
-| Resume / compaction | `MEMORY.md` / `memory.md`, `CURRENT.md` / `current.md` |
-| Regressions | `CURRENT` → `CHANGELOG` / `changelog.md` (newest entries only) |
-| Deep implementation | `HANDOVER.md`, `DEEPDIVE.md`, `deepdive.md` |
-| Deployment | `DEPLOYMENT.md`, `deployment.md` |
-| Domain task | matching topic doc only |
+| Changing docs/rules/deploy behavior | `<docs>/RULES.md` |
+| Resume / compaction | `<docs>/MEMORY.md` |
+| Deep project context (architecture, settings, API catalog) | `<docs>/OVERVIEW.md` |
+| Deployment | `<docs>/DEPLOYMENT.md` (+ target docs) |
 
-Never require HANDOVER or full CHANGELOG for small tasks.
+`<docs>` is `.agent/` or `.agents/` — use what exists. Legacy files
+(`CURRENT`, `HANDOVER`, `CHANGELOG`, `DEEPDIVE`, topic docs) may still exist in
+older projects; do not maintain them — propose migrating via
+project-agent-docs-manager.
 
 Project instructions override global instructions.
 
+## Git Is The Record
+
+- Commit + push after meaningful changes. **Detailed commit messages replace
+  changelogs**: precise subject + body with what changed and why; one topic per
+  commit so `git log --oneline` reads as the feature history.
+- Recover history via `git log --oneline`, `git log --grep`, `git log -S` —
+  not via handwritten change docs.
+- After every deploy, create an annotated tag `deploy/<target>-<yyyymmdd>`
+  describing what was uploaded. `git log deploy/<tag>..HEAD` shows what a
+  server is missing.
+
 ## Preferred Skills
 
-When available, proactively load and use:
+When available, proactively load and use **project-agent-docs-manager** when:
 
-* project-agent-docs-manager
-
-Use this skill whenever:
-
-* A project contains AGENTS.md
-* A project contains MEMORY.md
-* A project contains HANDOVER.md
-* A project contains CHANGELOG.md
-* The user asks to initialize project documentation
-* The user asks to continue previous work
-* The user asks for project structure, documentation, deployment notes, handovers, changelogs, memory, or deep project context
+* A project's agent docs need initializing, auditing, or slimming
+* A project still carries legacy CHANGELOG/CURRENT/HANDOVER files
+* The user asks for project structure, documentation, memory, or deep context
 
 ## Development Rules
 
 * Reuse existing routes, APIs, components, utilities, files, and patterns.
 * Understand existing implementation before modifying it.
-* Make the smallest safe change possible.
-* Preserve existing behavior unless instructed otherwise.
+* Make the smallest safe change possible; preserve behavior unless instructed.
 * Do not assume architecture, deployment, or business logic.
 * Do not invent facts, routes, commands, APIs, or deployment steps.
 * Do not delete user work without permission.
+* Verify beyond compile checks: syntax checkers miss runtime errors — smoke-test
+  new module-level code with a real import/call.
 
 ## Documentation Rules
 
-For meaningful changes:
-
-* Update CHANGELOG.md.
-* Update HANDOVER.md if work remains.
-* Update MEMORY.md for durable context only.
-* Update DEEPDIVE.md for important technical discoveries.
+* No changelog, status, or handover maintenance — git history covers it.
+* Update `MEMORY.md` only for durable facts that must survive compaction
+  (conventions, gotchas, environment quirks) — never recent-change noise.
+* Update `OVERVIEW.md` only when project fundamentals change.
+* Keep every doc short; every line costs tokens on every future read.
 
 ## Context Recovery
 
-Do not rely on Git state for context recovery unless project docs say so or the user explicitly asks.
+In order, on demand — not all at once:
 
-Prefer (on demand, not all at once):
-
-1. Project `AGENTS.md` + rules doc
-2. `CURRENT.md` / `current.md`
-3. `MEMORY.md` / `memory.md`
-4. `HANDOVER.md` / `handover.md`
-5. `CHANGELOG.md` / `changelog.md` — newest entries only
-6. `DEEPDIVE.md` / `deepdive.md`
-7. Remaining `.agent/` or `.agents/` topic docs
-8. Project files
+1. Project `AGENTS.md`
+2. `<docs>/MEMORY.md`
+3. `git log --oneline -20` (recent work)
+4. `<docs>/OVERVIEW.md` (only if fundamentals are needed)
+5. Project files
 
 ## Responses
 
-Always summarize:
-
-* What changed
-* Files modified
-* Remaining work
-* Risks or follow-ups
+Always summarize: what changed, files modified, remaining work, risks/follow-ups.

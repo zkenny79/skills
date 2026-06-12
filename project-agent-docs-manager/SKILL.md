@@ -1,58 +1,59 @@
 ---
 name: project-agent-docs-manager
-description: Initialize or slim agent project docs (AGENTS.md, .agent/.agents/). Use when setting up, auditing, or reducing tokens in agent documentation, memory, handover, or changelog files.
+description: Initialize, slim, or migrate agent project docs (AGENTS.md, .agent/). Use when setting up agent documentation, reducing doc token cost, or migrating legacy CHANGELOG/CURRENT/HANDOVER setups to the minimal model.
 disable-model-invocation: true
 ---
 
 # Project Agent Docs Manager
 
-Agent continuity with **minimal default token cost**.
+Agent continuity with **minimal token cost**. Git history is the record —
+docs carry only what git cannot.
 
 ## Principle
 
-Progressive disclosure: tiny entry docs first; depth on demand only.
-Details: [reference.md](./reference.md) (file rules, templates, full workflows).
+Few files, all short, read on demand. Every doc line costs tokens on every
+future read. Details: [reference.md](./reference.md).
 
-## Before Editing
+## The File Set
 
-1. Use existing `AGENTS.md`, `README.md`, `.agent/` or `.agents/` — no parallel doc trees.
-2. Source of truth: project docs + chat + file scans (Git only if docs say so).
+| File | Purpose |
+|------|---------|
+| `AGENTS.md` (root) | Operating contract: read-on-demand table, git rules, project shape, non-negotiables, verify commands (~60 lines) |
+| `CLAUDE.md` (root) | Thin import only: `@AGENTS.md` — never divergent content |
+| `<docs>/RULES.md` | Short strict rulebook (workflow + hard rules + docs layout) |
+| `<docs>/MEMORY.md` | Durable findings in short form: conventions, gotchas, env quirks |
+| `<docs>/OVERVIEW.md` | The one deep reference: architecture, settings keys, API catalog, sharp edges |
+| `<docs>/DEPLOYMENT*.md` | Optional, only if the project deploys: targets, exclusions, tag step |
 
-## Layout
+`<docs>` = existing `.agent/` or `.agents/`; default `.agent/`. **No**
+CHANGELOG, CURRENT, HANDOVER, DEEPDIVE, or topic docs.
 
-| Location | Files |
-|----------|-------|
-| Root | `README.md`, `AGENTS.md` (<250 lines), optional tiny `CLAUDE.md` → AGENTS |
-| `<docs>/` | `RULES`, `MEMORY`, `CURRENT`, `HANDOVER`, `CHANGELOG`, `DEPLOYMENT`; optional `CHANGELOG_ARCHIVE`, topic docs |
+## What Replaces The Deleted Files
 
-## Default Read Path (put in AGENTS.md)
-
-**Always:** `AGENTS.md` + `<docs>/RULES.md`
-
-**On demand:**
-
-| Need | Read |
-|------|------|
-| Resume / compaction | `MEMORY`, `CURRENT` |
-| Regressions | `CURRENT` → `CHANGELOG` |
-| Deep implementation | `HANDOVER` |
-| Deploy | `DEPLOYMENT` (+ target doc) |
-| Domain task | matching topic doc only |
-
-Never require `HANDOVER` or full `CHANGELOG` for small tasks.
+- CHANGELOG → detailed commit messages (subject + why, one topic per commit)
+- CURRENT → `git log --oneline -20` + MEMORY for anything durable
+- HANDOVER → merged into OVERVIEW (deduplicated, stale facts fixed)
+- Deploy history → annotated git tags `deploy/<target>-<yyyymmdd>`
 
 ## Workflows
 
-**Audit:** `wc -l` on docs → shrink always-read files → move bulk out of `AGENTS.md` → archive old changelog → report before/after lines.
+**Migrate (legacy → minimal):** read legacy docs → merge unique valuable
+content into OVERVIEW/MEMORY (fix stale facts while merging) → delete legacy
+files via `git rm` (recoverable) → update all cross-references → add the
+detailed-commit + deploy-tag rules to RULES → report line delta.
 
-**Init:** Inspect project → compact root + docs set → merge existing docs → unknowns marked `Unknown`.
+**Init:** inspect project → create AGENTS (+ CLAUDE import), RULES, MEMORY,
+OVERVIEW; DEPLOYMENT only if deployment exists → unknowns marked `Unknown`.
 
-**Maintain:** Concise newest-first `CHANGELOG`; prune `CURRENT`; durable facts → `MEMORY` only.
+**Audit:** `wc -l` on all docs → shrink AGENTS below ~80 lines → move depth to
+OVERVIEW → cut anything git already answers → report before/after.
 
 ## Safety
 
-No deletes/overwrites without permission. No invented facts, paths, deploy details, or secrets.
+Delete only what the user approved (git makes it recoverable — say so).
+Merge before deleting; never lose unique facts. No invented facts, paths,
+deploy details, or secrets in docs.
 
 ## Response
 
-Short: changes, files touched, whether default read path shrank, open unknowns.
+Short: files created/merged/deleted, line delta, what replaced what, open unknowns.
