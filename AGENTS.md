@@ -1,8 +1,25 @@
 # Global Agent Rules
 
-When entering a project, read in this order if present:
+When entering a project, use progressive disclosure — do not bulk-load all docs.
 
-AGENTS.md → RULES.md → MEMORY.md → HANDOVER.md → CHANGELOG.md → DEEPDIVE.md → .agents/
+## Default Read Policy
+
+**Always read (if present):**
+
+1. Project `AGENTS.md`
+2. `<docs>/RULES.md` or `<docs>/rules.md` (`.agent/` or `.agents/` — use what exists)
+
+**Read on demand:**
+
+| Need | Read |
+|------|------|
+| Resume / compaction | `MEMORY.md` / `memory.md`, `CURRENT.md` / `current.md` |
+| Regressions | `CURRENT` → `CHANGELOG` / `changelog.md` (newest entries only) |
+| Deep implementation | `HANDOVER.md`, `DEEPDIVE.md`, `deepdive.md` |
+| Deployment | `DEPLOYMENT.md`, `deployment.md` |
+| Domain task | matching topic doc only |
+
+Never require HANDOVER or full CHANGELOG for small tasks.
 
 Project instructions override global instructions.
 
@@ -10,7 +27,7 @@ Project instructions override global instructions.
 
 When available, proactively load and use:
 
-* project-operating-system
+* project-agent-docs-manager
 
 Use this skill whenever:
 
@@ -43,16 +60,18 @@ For meaningful changes:
 
 ## Context Recovery
 
-Do not rely on Git state for context recovery unless explicitly requested.
+Do not rely on Git state for context recovery unless project docs say so or the user explicitly asks.
 
-Prefer:
+Prefer (on demand, not all at once):
 
-1. HANDOVER.md
-2. CHANGELOG.md
-3. MEMORY.md
-4. DEEPDIVE.md
-5. .agents/
-6. Project files
+1. Project `AGENTS.md` + rules doc
+2. `CURRENT.md` / `current.md`
+3. `MEMORY.md` / `memory.md`
+4. `HANDOVER.md` / `handover.md`
+5. `CHANGELOG.md` / `changelog.md` — newest entries only
+6. `DEEPDIVE.md` / `deepdive.md`
+7. Remaining `.agent/` or `.agents/` topic docs
+8. Project files
 
 ## Responses
 
