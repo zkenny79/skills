@@ -13,6 +13,25 @@ read, so: few files, all short, read on demand.
 Migrating a legacy doc setup (CHANGELOG/CURRENT/HANDOVER/topic docs)?
 Follow [reference.md](./reference.md).
 
+## Lean mode (when requested)
+
+For "lean", "minimal", or "abgespeckt", use this mode instead of the full
+file set and Init workflow below. Keep the full mode available for other projects.
+
+- Create or trim only the root `AGENTS.md`, targeting 25-45 lines.
+- Reuse existing project documentation through a small read-on-demand table.
+  Do not create RULES, MEMORY, OVERVIEW, or a new `.agent/` tree by default.
+- Keep only verified architecture boundaries, non-obvious invariants, exact
+  verification commands, and the user's established change/release policy.
+- Get branch and change history from Git. Do not copy a task diary, route catalog,
+  current deployment state, or workstation-specific paths into the entry file.
+- Preserve an existing CLAUDE import; add one only when requested or already used.
+- Put a durable finding beside its existing documentation when possible.
+- For a requested cleanup or performance audit, remove duplication only when
+  behavior remains covered. Record reproducible before/after measurements;
+  don't replace real regression tests with source-text assertions or test counts.
+- Report files and line counts. Do not delete existing docs just to meet a budget.
+
 ## The File Set
 
 | File | Purpose |
@@ -99,19 +118,29 @@ assets, docs), restart steps, deploy-tag step. No new secrets.
 **Init:** inspect project → create AGENTS (+ CLAUDE import), RULES, MEMORY,
 OVERVIEW; DEPLOYMENT only if deployment exists → unknowns marked `Unknown`.
 
-**Audit:** `wc -l` on all docs → shrink AGENTS below ~80 lines → move depth
-to OVERVIEW → cut anything git already answers → report before/after lines.
+**Audit:** inspect relevant docs and line counts → report findings with quotations
+and concrete proposed edits. An audit alone does not authorize file changes.
+
+**Authorized cleanup:** when the user also requests implementation, edit within
+the agreed scope, move depth to existing reference docs, and remove duplication
+without losing unique rules. Line targets are guidance, not deletion authority.
+Report before/after line counts for changed docs.
 
 **Compaction read order:** AGENTS → MEMORY → `git log --oneline -20` →
 OVERVIEW only if fundamentals needed → project files.
 
 ## Safety
 
-Delete only with user approval (git keeps files recoverable — say so).
-Merge unique content before deleting its source. No invented facts, paths,
+Deleting existing document files requires explicit user approval. An authorized
+documentation edit permits changes to passages within the agreed scope. Reuse
+existing explicit approval for the same action and scope instead of asking again.
+Merge unique content before deleting its source; verify Git tracks a file before
+claiming it is recoverable through Git. No invented facts, paths,
 deploy details, or secrets. Preserve `.agent/` vs `.agents/` — never create
 a parallel tree.
 
 ## Response
 
-Short: files created/merged/deleted, line delta, what replaced what, open unknowns.
+For an audit: prioritized findings, quotations, locations, proposed edits, and
+any proposed expansion of authority. For implementation: files changed, line
+delta, verification, and remaining work. Do not present blocked work as complete.

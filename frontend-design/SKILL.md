@@ -9,6 +9,16 @@ This skill guides creation of distinctive, production-grade frontend interfaces 
 
 The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
 
+## Scope and precedence
+
+The request and existing design system determine the scope. Aesthetic defaults
+do not require extra features, assets, theme modes, or an unsolicited redesign.
+For small changes, preserve established typography and styling and verify the
+affected components. Apply full-page design guidance to new pages or substantial
+redesigns. When `design-taste-frontend` also applies, its context-specific
+exceptions take precedence over this skill's general aesthetic defaults.
+Explicit user requirements, accessibility, and functional correctness remain binding.
+
 ## Design Thinking
 
 Before coding, understand the context and commit to a BOLD aesthetic direction:
@@ -34,7 +44,7 @@ Focus on:
 - **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
 - **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
 
-NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
+Avoid context-free aesthetic defaults such as arbitrary font choices, cliched color schemes (particularly purple gradients on white backgrounds), and cookie-cutter layouts. Inter, Roboto, Arial, and system fonts are acceptable when established by the project or justified by the brief or accessibility needs; do not replace them solely to satisfy a style preference.
 
 Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.
 

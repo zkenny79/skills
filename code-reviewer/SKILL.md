@@ -20,7 +20,7 @@ Perform systematic code reviews that catch real issues while respecting the auth
 
 Before reviewing any code:
 
-1. Read the project's existing documentation (AGENTS.md, RULES.md, DEEPDIVE.md)
+1. Read applicable AGENTS.md instructions; open other documentation only for concrete context gaps. Missing legacy documents are not a prerequisite for a review.
 2. Understand the project's language, framework, and conventions
 3. Identify the purpose of the code being reviewed
 4. Check existing patterns in the codebase for consistency
@@ -121,7 +121,7 @@ Highlight good patterns, clean solutions, or well-written code.
 
 ## Questions
 
-List anything unclear that needs author input.
+List only material questions unresolved by the code, tests, and available documentation; omit this section when none remain. Identify which findings depend on an answer.
 ```
 
 ### 5. Review Principles
@@ -132,7 +132,8 @@ List anything unclear that needs author input.
 - **Respect intent**: Understand what the author was trying to achieve before suggesting changes
 - **Acknowledge good code**: Point out well-written sections too
 - **Prioritize**: Lead with the most important issues
-- **Don't assume**: Ask questions when context is unclear rather than assuming intent
+- **Resolve context first**: Search code, tests, and existing documentation before asking. Ask only when a remaining ambiguity could materially change the assessment. Continue reviewing independent areas and mark conclusions that cannot yet be established; do not invent the author's intent.
+- **Keep review scope**: A review request authorizes assessment and findings, not source edits or runtime changes unless the user also requests them.
 
 ### 6. Language-Specific Checks
 
