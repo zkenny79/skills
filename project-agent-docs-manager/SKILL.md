@@ -13,25 +13,6 @@ read, so: few files, all short, read on demand.
 Migrating a legacy doc setup (CHANGELOG/CURRENT/HANDOVER/topic docs)?
 Follow [reference.md](./reference.md).
 
-## Lean mode (when requested)
-
-For "lean", "minimal", or "abgespeckt", use this mode instead of the full
-file set and Init workflow below. Keep the full mode available for other projects.
-
-- Create or trim only the root `AGENTS.md`, targeting 25-45 lines.
-- Reuse existing project documentation through a small read-on-demand table.
-  Do not create RULES, MEMORY, OVERVIEW, or a new `.agent/` tree by default.
-- Keep only verified architecture boundaries, non-obvious invariants, exact
-  verification commands, and the user's established change/release policy.
-- Get branch and change history from Git. Do not copy a task diary, route catalog,
-  current deployment state, or workstation-specific paths into the entry file.
-- Preserve an existing CLAUDE import; add one only when requested or already used.
-- Put a durable finding beside its existing documentation when possible.
-- For a requested cleanup or performance audit, remove duplication only when
-  behavior remains covered. Record reproducible before/after measurements;
-  don't replace real regression tests with source-text assertions or test counts.
-- Report files and line counts. Do not delete existing docs just to meet a budget.
-
 ## The File Set
 
 | File | Purpose |
